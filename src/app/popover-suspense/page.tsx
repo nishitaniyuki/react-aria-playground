@@ -1,5 +1,6 @@
 "use client";
 
+import { useSuspenseQuery } from "@tanstack/react-query";
 import { Suspense, use, useReducer } from "react";
 import {
   Button,
@@ -10,30 +11,20 @@ import {
 } from "react-aria-components";
 
 function Comment() {
-  const { text } = use(
-    fetch("http://localhost:3001/comments/1").then((res) => res.json())
-  );
+  const {
+    data: { text },
+  } = useSuspenseQuery({
+    queryKey: ["comments", "1"],
+    queryFn: () =>
+      fetch("http://localhost:3001/comments/1").then((res) => res.json()),
+  });
 
   return <p>{text}</p>;
 }
 
 export default function PopoverAndSuspense() {
-  const [hasOnceOpen, setHasOnceOpen] = useReducer(() => true, false);
-
-  const comment = hasOnceOpen ? (
-    <Suspense fallback="loading">
-      <Comment />
-    </Suspense>
-  ) : null;
-
-  const handleOpenChange = () => {
-    if (!hasOnceOpen) {
-      setHasOnceOpen();
-    }
-  };
-
   return (
-    <DialogTrigger onOpenChange={handleOpenChange}>
+    <DialogTrigger>
       <Button>Read Comment</Button>
       <Popover>
         <OverlayArrow>
@@ -41,7 +32,11 @@ export default function PopoverAndSuspense() {
             <path d="M0 0 L6 6 L12 0" />
           </svg>
         </OverlayArrow>
-        <Dialog>{comment}</Dialog>
+        <Dialog>
+          <Suspense fallback="loading">
+            <Comment />
+          </Suspense>
+        </Dialog>
       </Popover>
     </DialogTrigger>
   );
