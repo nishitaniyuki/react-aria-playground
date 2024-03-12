@@ -1,7 +1,7 @@
 "use client";
 
 import { useSuspenseQuery } from "@tanstack/react-query";
-import { Suspense, use, useReducer } from "react";
+import { Suspense } from "react";
 import {
   Button,
   Dialog,
