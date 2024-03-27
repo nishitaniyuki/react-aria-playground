@@ -8,6 +8,9 @@ export default function Home() {
         <li>
           <Link href="/popover-suspense">Popover and Suspense</Link>
         </li>
+        <li>
+          <Link href="/tag-field">TagField</Link>
+        </li>
       </ul>
     </main>
   );
