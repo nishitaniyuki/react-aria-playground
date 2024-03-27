@@ -2,7 +2,7 @@
 
 import { useListData } from "react-stately";
 
-import ReorderableTagGroup from "./reorderable-tag-group";
+import ReorderableTagField from "./reorderable-tag-field";
 
 const USERS = [
   { id: 1, name: "Paul McCartney" },
@@ -30,7 +30,7 @@ export default function TagFieldExample() {
       <h1>TagField Example</h1>
       <small>※ ComboBox is not working properly.</small>
 
-      <ReorderableTagGroup
+      <ReorderableTagField
         aria-label="selected users"
         list={usersList}
         selectedList={selectedUsersList}
